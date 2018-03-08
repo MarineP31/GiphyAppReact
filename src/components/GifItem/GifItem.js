@@ -48,37 +48,37 @@ const Figure = styled.figure`
 `;
 
 class GifItem extends Component {
-  constructor() {
-    super();
-    this.state = {
-      visible: false
-    }
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     visible: false
+  //   }
+  // }
 
-  handleClickHeart = () => {
-    const localGif = JSON.parse(localStorage.getItem('items')) || [];
+  // handleClickHeart = () => {
+  //   const localGif = JSON.parse(localStorage.getItem('items')) || [];
 
-    if (localGif.indexOf(this.props.gif) === -1) {
-      localGif.push(this.props.gif);
-      localStorage.setItem('items', JSON.stringify(localGif));
-      this.setState({ 
-        visible: true
-      })
+  //   if (localGif.indexOf(this.props.gif) === -1) {
+  //     localGif.push(this.props.gif);
+  //     localStorage.setItem('items', JSON.stringify(localGif));
+  //     this.setState({ 
+  //       visible: true
+  //     })
 
-    } else if (localGif.indexOf(this.props.gif) > -1){
-      const gifIndex = localGif.indexOf(this.props.gif);
-      localGif.splice(gifIndex, 1);
-      localStorage.setItem('items', JSON.stringify(localGif));
-      this.setState({
-        visible: false
-      })
-    }
-  }
+  //   } else if (localGif.indexOf(this.props.gif) > -1){
+  //     const gifIndex = localGif.indexOf(this.props.gif);
+  //     localGif.splice(gifIndex, 1);
+  //     localStorage.setItem('items', JSON.stringify(localGif));
+  //     this.setState({
+  //       visible: false
+  //     })
+  //   }
+  // }
 
   render() {
-    const heartVisible = classNames({
-      'visible': this.state.visible,
-    })
+    // const heartVisible = classNames({
+    //   'visible': this.state.visible,
+    // })
 
     return (
       <Figure >
@@ -86,12 +86,13 @@ class GifItem extends Component {
           icon={faHeart} 
           style={FaHeartStyle} 
           onClick={this.handleClickHeart} 
-          classnames={heartVisible}/>
+          // classnames={heartVisible}
+        />
         <GifImages 
-          src={this.props.gif} 
+          src={this.props.gif.images.downsized.url} 
           alt="giphy"/>
         <CopyToClipboard
-          text={this.props.gif}
+          text={this.props.gif.images.downsized.url}
           // onCopy={() => this.setState({ copied: true })}
         >
           <FontAwesomeIcon 

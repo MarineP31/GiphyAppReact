@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import createHistory from "history/createBrowserHistory";
 import styled from 'styled-components';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/fontawesome-free-solid';
@@ -38,43 +36,43 @@ const Input = styled.input`
 
 class SearchBar extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      term: ''
-    }
-  }
+  super(props);
+  this.state = { init: '' };
+  this.onInputChange = this.onInputChange.bind(this);
+}
 
-  handleChange = (event) => {
-    this.setState({
-      term: event.target.value
-    });
-  }
+onInputChange(event) {
+  this.setState({ init: event.target.value });
+  this.props.onTermChange(event.target.value);
+}
 
-  handleSubmit = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
+onFormSubmit(event) {
+  event.preventDefault();
+  alert('No')
+}
 
-      const currentSearch = new URLSearchParams(this.props.location.search);
-
-      currentSearch.set('q', this.state.term);
-
-      this.props.history.push(`${this.props.location.pathname}?${currentSearch}`)
-    }
-  }
+  // handleSubmit = (e) => {
+  //   if (e.key === 'Enter') {
+  //     e.preventDefault();
+  //     const currentSearch = this.props.onTermChange(term);
+  //     currentSearch.set('q', this.state.term);
+  //     this.props.history.push(`${this.props.location.pathname}?${currentSearch}`)
+  //   }
+  // }
 
   render() {
     return (
       <Form>
-        <Link to={`/search?q=${this.state.term}`} onClick={this.handleSubmit}>
-          <FontAwesomeIcon icon={faSearch} style={FaSearchStyle} />
-        </Link>
+        <FontAwesomeIcon icon={faSearch} style={FaSearchStyle} />
         <Input
           type='search'
           name='q'
           placeholder='Search a gif...'
-          defaultValue={new URLSearchParams(this.props.location.search).get('q')}
-          onChange={this.handleChange} 
-          onKeyPress={this.handleSubmit} />
+          // defaultValue={new URLSearchParams(this.props.location.search).get('q')}
+          onChange={this.onInputChange}
+          value={this.state.init}
+          onSubmit={this.onFormSubmit}
+        />
       </Form>
     )
   }
