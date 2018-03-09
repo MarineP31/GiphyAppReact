@@ -1,33 +1,40 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import GifItem from '../GifItem/GifItem';
-
-const Wrapper = styled.div`
-    margin: 0;
-    padding: 0% 2%;
-    column-count: 4;
-`;
+import GifList from '../GifList/GifList';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../../actions/index';
 
 class GifFavourites extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      favourites: JSON.parse(localStorage.getItem('items'))
-    };
-  };
-
-  render() {
-    return (
-      <Wrapper>
-      {
-        this.state.favourites.map(item => (
-          <GifItem key={((Math.random() * 1000) + 1)} gif={item} />
-        ))
-      }
-      </Wrapper>
-    );
+  componentWillMount() {
+    this.props.actions.fetchFavoritedGifs();
   }
 
-};
+  render() {
+    console.log(this.props.gifs)
+    return (
+      <div>
+        <GifList 
+          gifs = { this.props.gifs } 
+          onFavoriteSelect = { selectedGif => this.props.actions.favoriteGif({selectedGif}) }
+          onFavoriteDeselect = { selectedGif => this.props.actions.unfavoriteGif({selectedGif}) }
+          isFavorite = { true }
+        />
+      </div>
+    );
+  }
+}
 
-export default GifFavourites;
+function mapStateToProps(state) {
+  return {
+    gifs: state.gifs.favorites,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GifFavourites);

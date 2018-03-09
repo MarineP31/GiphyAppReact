@@ -36,20 +36,19 @@ const Input = styled.input`
 
 class SearchBar extends Component {
   constructor(props) {
-  super(props);
-  this.state = { init: '' };
-  this.onInputChange = this.onInputChange.bind(this);
-}
+    super(props);
+    this.state = {value: ''};
+  }
 
-onInputChange(event) {
-  this.setState({ init: event.target.value });
-  this.props.onTermChange(event.target.value);
-}
+  handleChange = (event) => {
+    this.setState({value: event.target.value});
+  }
 
-onFormSubmit(event) {
-  event.preventDefault();
-  alert('No')
-}
+  handleSubmit = (event) => {
+    this.props.onTermChange(this.state.value);
+    event.preventDefault();
+
+  }
 
   // handleSubmit = (e) => {
   //   if (e.key === 'Enter') {
@@ -62,16 +61,14 @@ onFormSubmit(event) {
 
   render() {
     return (
-      <Form>
+      <Form onSubmit={this.handleSubmit}>
         <FontAwesomeIcon icon={faSearch} style={FaSearchStyle} />
         <Input
           type='search'
           name='q'
           placeholder='Search a gif...'
-          // defaultValue={new URLSearchParams(this.props.location.search).get('q')}
-          onChange={this.onInputChange}
-          value={this.state.init}
-          onSubmit={this.onFormSubmit}
+          onChange={this.handleChange}
+          value={this.state.value}
         />
       </Form>
     )

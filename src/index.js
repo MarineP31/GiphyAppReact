@@ -7,7 +7,6 @@ import configureStore from './store/configureStore';
 
 import './styles/index.css';
 import App from './containers/App';
-import Favorites from './components/GifFavourites/GifFavourites';
 import registerServiceWorker from './utilities/registerServiceWorker';
 
 const store = configureStore();

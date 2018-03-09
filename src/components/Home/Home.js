@@ -8,7 +8,11 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <GifList gifs={ this.props.gifs } />
+        <GifList 
+          gifs = { this.props.gifs } 
+          onFavoriteSelect = { selectedGif => this.props.actions.favoriteGif({selectedGif}) }
+          onFavoriteDeselect = { selectedGif => this.props.actions.unfavoriteGif({selectedGif}) }
+        />
       </div>
     );
   }

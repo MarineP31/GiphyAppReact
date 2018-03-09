@@ -7,6 +7,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.7",
     "@fortawesome/react-fontawesome": "^0.0.17",
     "classnames": "^2.2.5",
+    "cross-fetch": "^2.0.0",
     "history": "^4.7.2",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
@@ -17,6 +18,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "styled-components": "^3.1.6"
   },
   "scripts": {

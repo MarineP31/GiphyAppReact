@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import classNames from 'classnames';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -17,6 +16,17 @@ const FaCopyStyle = {
 };
 
 const FaHeartStyle = {
+  color: '#FF4136',
+  width: '45px',
+  fontSize: '23px',
+  position: 'absolute',
+  bottom: '12%',
+  right: '3%',
+  visibility: 'visible',
+  opacity: 1
+}
+
+const FaHeartStyleClicked = {
   color: '#FF4136',
   width: '45px',
   fontSize: '23px',
@@ -48,56 +58,46 @@ const Figure = styled.figure`
 `;
 
 class GifItem extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     visible: false
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+    this.state = { 
+      favorited: this.props.isFavorite 
+    };
+  }
+ 
+  favoriteGif() {
+    this.setState({ 
+      favorited: true 
+    });
+    styled.figure`
+    .fa-heart {
+      opacity: 1;
+      visibility: visible;
+    }`
+    this.props.onFavoriteSelect(this.props.gif);
+  }
 
-  // handleClickHeart = () => {
-  //   const localGif = JSON.parse(localStorage.getItem('items')) || [];
+  unfavoriteGif() {
+    this.setState({ 
+      favorited: false 
+    });
+    this.props.onFavoriteDeselect(this.props.gif);
+  }
 
-  //   if (localGif.indexOf(this.props.gif) === -1) {
-  //     localGif.push(this.props.gif);
-  //     localStorage.setItem('items', JSON.stringify(localGif));
-  //     this.setState({ 
-  //       visible: true
-  //     })
-
-  //   } else if (localGif.indexOf(this.props.gif) > -1){
-  //     const gifIndex = localGif.indexOf(this.props.gif);
-  //     localGif.splice(gifIndex, 1);
-  //     localStorage.setItem('items', JSON.stringify(localGif));
-  //     this.setState({
-  //       visible: false
-  //     })
-  //   }
-  // }
+  renderFavoriteHeart = () => {
+    if (this.state.favorited) {
+      return <FontAwesomeIcon icon={faHeart} style={FaHeartStyle} onClick={() => this.unfavoriteGif()} />;
+    }
+    return <FontAwesomeIcon icon={faHeart} style={FaHeartStyleClicked} onClick={() => this.favoriteGif()} />;
+  };
 
   render() {
-    // const heartVisible = classNames({
-    //   'visible': this.state.visible,
-    // })
-
     return (
       <Figure >
-        <FontAwesomeIcon 
-          icon={faHeart} 
-          style={FaHeartStyle} 
-          onClick={this.handleClickHeart} 
-          // classnames={heartVisible}
-        />
-        <GifImages 
-          src={this.props.gif.images.downsized.url} 
-          alt="giphy"/>
-        <CopyToClipboard
-          text={this.props.gif.images.downsized.url}
-          // onCopy={() => this.setState({ copied: true })}
-        >
-          <FontAwesomeIcon 
-            icon={faCopy} 
-            style={FaCopyStyle} />
+        { this.renderFavoriteHeart() }
+        <GifImages src={this.props.gif.images.downsized.url} alt="giphy"/>
+        <CopyToClipboard text={this.props.gif.images.downsized.url} onCopy={() => this.setState({ copied: true })} >
+          <FontAwesomeIcon icon={faCopy} style={FaCopyStyle} />
         </CopyToClipboard>
       </Figure>
     );

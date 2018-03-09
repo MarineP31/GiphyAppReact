@@ -7,6 +7,7 @@ import GifFavourites from '../components/GifFavourites/GifFavourites';
 
 class App extends React.Component {
   render() {
+    console.log('APP : ' + this.props.children)
     return (
       <div>
         <Header />

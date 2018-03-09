@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/fontawesome-free-solid';
-import GifFavourites from '../GifFavourites/GifFavourites';
 
 const Wrapper = styled.header`
   display: flex;

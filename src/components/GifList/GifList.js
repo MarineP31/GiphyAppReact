@@ -9,8 +9,15 @@ const Wrapper = styled.div`
 `;
 
 const GifList = (props) => {
+  console.log('GIFLIST :' + props.gifs)
   const gifItems = props.gifs.map((item) => {
-    return <GifItem key={item.id} gif={item} />
+    return <GifItem 
+      key={item.id} 
+      gif={item}
+      onFavoriteSelect={props.onFavoriteSelect}
+      onFavoriteDeselect={props.onFavoriteDeselect}
+      isFavorite={props.isFavorite}
+    />
   });
 
   return (

@@ -14,31 +14,32 @@ export function requestGifs(term = null) {
   }
 }
 
-// export function favoriteGif({selectedGif}) {
-//   const userUid = Firebase.auth().currentUser.uid;
-//   const gifId = selectedGif.id;
+export function favoriteGif({selectedGif}) {
+  const localGif = JSON.parse(localStorage.getItem('items')) || [];
 
-//   return dispatch => Firebase.database().ref(userUid).update({
-//     [gifId]: selectedGif
-//   });
-// }
+  return dispatch => {
+      localGif.push(selectedGif);
+      localStorage.setItem('items', JSON.stringify(localGif));
+  }
+}
 
-// export function unfavoriteGif({selectedGif}) {
-//   const userUid = Firebase.auth().currentUser.uid;
-//   const gifId = selectedGif.id;
+export function unfavoriteGif({selectedGif}) {
+  const localGif = JSON.parse(localStorage.getItem('items'))
 
-//   return dispatch => Firebase.database().ref(userUid).child(gifId).remove();
-// }
+  return dispatch => {
+      const gifIndex = localGif.findIndex(x => x.id === selectedGif.id);
+      localGif.splice(gifIndex, 1);
+      localStorage.setItem('items', JSON.stringify(localGif));
+  }
+}
 
-// export function fetchFavoritedGifs() {
-//   return function(dispatch) {
-//     const userUid = Firebase.auth().currentUser.uid;
+export function fetchFavoritedGifs() {
+  return function(dispatch) {
+    const localGif = JSON.parse(localStorage.getItem('items'))
 
-//     Firebase.database().ref(userUid).on('value', snapshot => {
-//       dispatch({
-//         type: FETCH_FAVORITED_GIFS,
-//         payload: snapshot.val()
-//       })
-//     });
-//   }
-// }
+    dispatch({
+      type: FETCH_FAVORITED_GIFS,
+      payload: localGif
+    })
+  }
+}
