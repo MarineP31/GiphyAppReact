@@ -7,7 +7,8 @@ const FaSearchStyle = {
   fontSize: '23px',
   marginRight: '1%',
   height: '1.5em',
-  color: 'white'
+  color: 'white',
+  cursor: 'pointer'
 };
 
 const Form = styled.form`
@@ -37,32 +38,32 @@ const Input = styled.input`
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {
+      value: ''
+    };
   }
 
+  componentWillMount() {
+    const term = new URLSearchParams(this.props.location.search).get('q')
+    this.setState({
+      value: term
+    });
+  }    
+
   handleChange = (event) => {
-    this.setState({value: event.target.value});
+    this.setState({
+      value: event.target.value
+    });
   }
 
   handleSubmit = (event) => {
-    this.props.onTermChange(this.state.value);
-    event.preventDefault();
-
+    this.props.history.push(`/search?q=${this.state.value}`)
   }
-
-  // handleSubmit = (e) => {
-  //   if (e.key === 'Enter') {
-  //     e.preventDefault();
-  //     const currentSearch = this.props.onTermChange(term);
-  //     currentSearch.set('q', this.state.term);
-  //     this.props.history.push(`${this.props.location.pathname}?${currentSearch}`)
-  //   }
-  // }
 
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FontAwesomeIcon icon={faSearch} style={FaSearchStyle} />
+        <FontAwesomeIcon icon={faSearch} style={FaSearchStyle} onClick={this.handleSubmit}/>
         <Input
           type='search'
           name='q'

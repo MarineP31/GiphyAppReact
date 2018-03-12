@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import GifList from '../GifList/GifList';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +10,6 @@ class GifFavourites extends Component {
   }
 
   render() {
-    console.log(this.props.gifs)
     return (
       <div>
         <GifList 

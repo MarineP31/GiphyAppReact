@@ -9,7 +9,6 @@ const Wrapper = styled.div`
 `;
 
 const GifList = (props) => {
-  console.log('GIFLIST :' + props.gifs)
   const gifItems = props.gifs.map((item) => {
     return <GifItem 
       key={item.id} 

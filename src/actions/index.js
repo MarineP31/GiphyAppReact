@@ -1,13 +1,27 @@
 export const REQUEST_GIFS = 'REQUEST_GIFS';
 export const FETCH_FAVORITED_GIFS = 'FETCH_FAVORITED_GIFS';
+export const TRENDING_GIFS = 'TRENDING_GIFS';
 
-export function requestGifs(term = null) {
-  return (dispatch) => {
+export function requestGifs(term) {
+  return dispatch => {
     fetch(`http://api.giphy.com/v1/gifs/search?q=${term}&api_key=m85aKxATBh273ah984X5Jlq3k7bGAkBO`)
     .then(res => res.json())
     .then((data) => {
       dispatch({
         type: REQUEST_GIFS,
+        payload: data
+      });
+    });
+  }
+}
+
+export function requestTrendingGifs() {
+  return dispatch => {
+    fetch(`http://api.giphy.com/v1/gifs/trending?&api_key=m85aKxATBh273ah984X5Jlq3k7bGAkBO`)
+    .then(res => res.json())
+    .then((data) => {
+      dispatch({
+        type: TRENDING_GIFS,
         payload: data
       });
     });

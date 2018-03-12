@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions/index';
@@ -43,19 +44,27 @@ const Menu = styled.ul`
 
 class Header extends Component {  
   render() {
+    const SearchBarComponent = (props) => {
+      return (
+        <SearchBar 
+          onTermChange={this.props.actions.requestGifs}
+          {...props}
+        />
+      );
+    }
     return (
       <div>
       <Wrapper>
         <Link to="/">
           <Logo src="https://tctechcrunch2011.files.wordpress.com/2016/02/giphyseriesc.gif?w=738" alt="Logo" />
         </Link>
-        <SearchBar onTermChange={this.props.actions.requestGifs} />
+        <Route path="/" render={SearchBarComponent} />
       </Wrapper>
-      <Menu>
-        <li> gifs found</li>
+      <Menu total = { this.props.total }>
+        <li> {this.props.total} gifs found</li>
         <li>
           <FontAwesomeIcon icon={faHeart} style={FaHeartStyle}/>
-          <NavLink to="/favorited">Mes favoris</NavLink>
+          <NavLink to="/favorited" OnClick={this.props.actions.requestGifs}>Mes favoris</NavLink>
         </li>
       </Menu>
     </div>
@@ -66,6 +75,7 @@ class Header extends Component {
 function mapStateToProps(state) {
   return {
     gifs: state.gifs.data,
+    total: state.gifs.total
   };
 }
 

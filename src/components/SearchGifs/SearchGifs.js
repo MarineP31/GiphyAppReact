@@ -4,11 +4,10 @@ import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions/index';
 import GifList from '../GifList/GifList';
 
-class Home extends Component {
+class SearchGifs extends Component {
   componentWillMount() {
-    if (this.props.location.search.length === 0) {
-    this.props.actions.requestTrendingGifs();
-    }
+    const term = new URLSearchParams(this.props.location.search).get('q')
+    this.props.actions.requestGifs(term);
   }
 
   render() {
@@ -26,7 +25,7 @@ class Home extends Component {
 
 function mapStateToProps(state) {
   return {
-    gifs: state.gifs.trending,
+    gifs: state.gifs.data,
   };
 }
 
@@ -36,4 +35,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchGifs);

@@ -96,7 +96,7 @@ class GifItem extends Component {
       <Figure >
         { this.renderFavoriteHeart() }
         <GifImages src={this.props.gif.images.downsized.url} alt="giphy"/>
-        <CopyToClipboard text={this.props.gif.images.downsized.url} onCopy={() => this.setState({ copied: true })} >
+        <CopyToClipboard text={this.props.gif.images.downsized.url} >
           <FontAwesomeIcon icon={faCopy} style={FaCopyStyle} />
         </CopyToClipboard>
       </Figure>

@@ -3,16 +3,16 @@ import Header from '../components/Header/Header';
 import { Route } from 'react-router';
 import Home from '../components/Home/Home';
 import GifFavourites from '../components/GifFavourites/GifFavourites';
-
+import SearchGifs from '../components/SearchGifs/SearchGifs';
 
 class App extends React.Component {
   render() {
-    console.log('APP : ' + this.props.children)
     return (
       <div>
         <Header />
-        <Route path="/" component={Home} />
-        <Route path='/favorited' component={GifFavourites}/>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/search" component={SearchGifs} />
+        <Route exact path='/favorited' component={GifFavourites}/>
         { this.props.children }
       </div>
     );
